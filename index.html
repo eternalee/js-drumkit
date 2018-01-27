@@ -58,7 +58,34 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-
+  function playSound(event) {
+    // if right key is pressed, play corresponding sound
+    // identify keys that are pressed and their corresponding sounds
+    // highlight keys visually; find the corresponding div.key element, add the class playing
+    
+    var keyCode = event.keyCode;
+    var audio = document.querySelector("audio[data-key='" + keyCode + "']");
+    var key = document.querySelector("div[data-key='" + keyCode + "']");
+    
+    if(audio){
+      key.classList.add('playing');
+      audio.play();
+      console.log({ keyCode: keyCode, soundFile: audio.src});
+    }
+  }
+    function removePlaying(event) {
+      if(event.propertyName == 'transform') {
+        event.target.classList.remove('playing');
+      }
+    }
+    
+    var keys = Array.from(document.querySelectorAll('.key'))
+    
+    keys.forEach(function(key) {
+      key.addEventListener('transitionend', removePlaying);
+    })
+    
+    window.addEventListener('keydown', playSound)
 </script>
 
 
